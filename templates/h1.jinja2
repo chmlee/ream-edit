@@ -1,0 +1,51 @@
+<!doctype html>
+{% for header_1 in ream_dict %}
+  <h1>{{ header_1 }}</h1>
+  <ul>
+  {% set dict_1 = ream_dict[header_1]%}
+  {% for key_1 in dict_1  %}
+    {% set val_1 = dict_1[key_1] %}
+
+    {% if ((val_1 is string) or (val_1 is number)) %}
+      
+      {# create new list item #}
+      <li>{{key_1}}: {{val_1}}</li>
+
+    {% elif val_1 is mapping %}
+
+      {# one-time entry #}
+      {% set dict_2 = val_1 %}
+      {% set header_2 = key_1 %}
+      {% include 'h2.jinja2' %}
+
+    {% else %}
+
+      {% set list_1 = val_1 %}
+      {% set test_item_1 = list_1[0] %}
+      
+      {% if ((test_item_1 is string) or (test_item_1 is number)) %}
+
+        {# normal list #}
+        <li>{{key_1}}
+          <ul>
+          {% for item_1 in list_1 %}
+            <li>{{item_1}}</li> 
+          {% endfor %}
+          </ul>
+        </li>
+
+      {% else %}
+
+        {# list of entries #}
+        {% set header_2 = key_1 %}
+        {% for dict_2 in list_1 %}
+          {% include 'h2.jinja2' %}
+        {% endfor %}
+
+      {% endif %}
+
+    {% endif %}
+
+  {% endfor %}
+  </ul>
+{% endfor %}
