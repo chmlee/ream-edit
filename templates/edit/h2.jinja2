@@ -1,0 +1,68 @@
+{% for dict_2 in list_2 %}
+<div class="ream level-2">
+  {% set header_2 = key_2 %}
+  <h2>{{ header_2 }}</h2>
+  <ul>
+  {% for key_3 in dict_2  %}
+    {% set val_2 = dict_2[key_3] %}
+
+    {% if ((val_2 is string) or (val_2 is number) or (val_2 is none)) %}
+      
+      {% if val_2 is none %}
+      {# replace null with blank #}
+        {% set val_2 = "" %}
+      {% endif %}
+      
+      {# create new variable #}
+      <li>
+        <label for="{{key_3 | replace(' ', '_')}}">{{key_3}}:</label>
+        <input type="text" class="level-2-item variable-value" name="{{key_3 | replace(' ', '_')}}" value="{{val_2}}"><br>
+      </li>
+
+    {# Probably don't need this part any more
+    {% elif val_2 is mapping %}
+
+      {% set dict_3 = val_2 %}
+      {% set header_3 = key_3 %}
+      <li>
+        {% include 'edit/h3.jinja2' %}
+      </li>
+    #}
+
+    {% else %}
+
+      {% set list_3 = val_2 %}
+      {% set test_item_3 = list_3[0] %}
+      
+      {% if ((test_item_3 is string) or (test_item_3 is number)) %}
+
+        {# normal list #}
+        <li>{{key_3}}
+          <ul>
+          {% for item_3 in list_3 %}
+            <li>
+              <label for="{{key_3 | replace(' ', '_')}}">{{key_3}}:</label>
+              <input type="text" class="level-2-item list-item" name="{{key_3 | replace(' ', '_')}}" value="{{item_2}}"><br>
+            </li> 
+          {% endfor %}
+          </ul>
+        </li>
+
+      {% else %}
+
+        {# list of entries #}
+        {% set header_3 = key_3 %}
+        {% for dict_3 in list_3 %}
+        <li>
+          {% include 'edit/h3.jinja2' %}
+        </li>
+        {% endfor %}
+
+      {% endif %}
+
+    {% endif %}
+
+  {% endfor %}
+  </ul>
+</div>
+{% endfor %}

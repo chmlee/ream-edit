@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<title>{{file_name}}</title>
+  <script>
+    function random_id(){
+      return '_' + Math.random().toString(36).substr(2, 9) + Math.random().toString(36).substr(2, 9)
+    }
+function assign_random_id(){
+  $.each($('.ream'),  function() { 
+    $(this).attr('id', random_id)
+  })
+}
+    window.onload = assign_random_id
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+
+<script type=text/javascript>
+    $(function() {
+    $('button').bind('click', function() {
+      var a = "test-" + $('input[name="Data_Preserving_List"]').val();
+      $.getJSON(url = '/_test', {
+        a: $('input[name="Country"]').val(),
+        b: $('input[name="Data_Preserving_List"]').val(),
+        c: a
+      }, function(data) {
+        $("p").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
+
+<script>
+
+</script>
+
+
+</head>
+<body>
+
+<form method="POST">
+
+
+
+
+  <button id="save">save</button>
+  <p ></p>
+
+
+
+
+
+{% for key_1 in ream_dict %}
+{% set list_1 = ream_dict[key_1]%}
+  {% include 'edit/h1.jinja2' %}
+{% endfor %}
+
+
+<div>
+</form>
+
+</html>

@@ -1,51 +1,47 @@
-  <h3>{{ header_3 }}</h3>
-  <ul>
-  {% for key_3 in dict_3  %}
-    {% set val_3 = dict_3[key_3] %}
+<h3>{{ header_3 }}</h3>
+<ul>
+{% for key_3 in dict_3  %}
+{% set val_3 = dict_3[key_3] %}
 
-    {% if ((val_3 is string) or (val_3 is number)) %}
-      
-      {# create new list item #}
-      <li>{{key_3}}: 
-        <input type="text" value='{{val_3}}'>
-      </li>
+{% if ((val_3 is string) or (val_3 is number)) %}
+  
+  {# create new list item #}
+  <li>{{key_3}}: {{val_3}}</li>
 
-    {% elif val_3 is mapping %}
+{% elif val_3 is mapping %}
 
-      {# one-time entry #}
-      {% set dict_4 = val_3 %}
-      {% set header_4 = key_3 %}
+  {# one-time entry #}
+  {% set dict_4 = val_3 %}
+  {% set header_4 = key_3 %}
+  {% include 'h4.jinja4' %}
+
+{% else %}
+
+  {% set list_3 = val_3 %}
+  {% set test_item_3 = list_3[0] %}
+  
+  {% if ((test_item_3 is string) or (test_item_3 is number)) %}
+
+    {# normal list #}
+    <li>{{key_3}}
+      <ul>
+      {% for item_3 in list_3 %}
+        <li>{{item_3}}</li> 
+      {% endfor %}
+      </ul>
+    </li>
+
+  {% else %}
+
+    {# list of entries #}
+    {% set header_4 = key_3 %}
+    {% for dict_4 in list_3 %}
       {% include 'h4.jinja2' %}
+    {% endfor %}
 
-    {% else %}
+  {% endif %}
 
-      {% set list_3 = val_3 %}
-      {% set test_item_3 = list_3[0] %}
-      
-      {% if ((test_item_3 is string) or (test_item_3 is number)) %}
+{% endif %}
 
-        {# normal list #}
-        <li>{{key_3}}
-          <ul>
-          {% for item_3 in list_3 %}
-            <li>
-              <input type="text", value='{{item_3}}'>
-            </li> 
-          {% endfor %}
-          </ul>
-        </li>
-
-      {% else %}
-
-        {# list of entries #}
-        {% set header_4 = key_3 %}
-        {% for dict_4 in list_3 %}
-          {% include 'h4.jinja2' %}
-        {% endfor %}
-
-      {% endif %}
-
-    {% endif %}
-
-  {% endfor %}
-  </ul>
+{% endfor %}
+</ul>

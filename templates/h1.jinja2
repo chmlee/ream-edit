@@ -1,17 +1,15 @@
 <!doctype html>
 {% for header_1 in ream_dict %}
-{% set dict_1 = ream_dict[header_1]%}
   <h1>{{ header_1 }}</h1>
   <ul>
+  {% set dict_1 = ream_dict[header_1]%}
   {% for key_1 in dict_1  %}
     {% set val_1 = dict_1[key_1] %}
 
     {% if ((val_1 is string) or (val_1 is number)) %}
       
       {# create new list item #}
-      <li>{{key_1}}: 
-        <input type="text" value='{{val_1}}'>
-      </li>
+      <li>{{key_1}}: {{val_1}}</li>
 
     {% elif val_1 is mapping %}
 
@@ -31,9 +29,7 @@
         <li>{{key_1}}
           <ul>
           {% for item_1 in list_1 %}
-            <li>
-              <input type="text", value='{{item_1}}'>
-            </li> 
+            <li>{{item_1}}</li> 
           {% endfor %}
           </ul>
         </li>
